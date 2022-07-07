@@ -1,0 +1,2 @@
+Es básicamente un `fs.readFileSync` sobre el archivo template, y con un `.replaceAll()` reemplazas cada elemento del template (que seria un string)
+(o fs.readFile)
