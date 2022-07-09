@@ -1,4 +1,4 @@
-import Contenedor from "./claseContenedor-clase4.js";
+import Contenedor from "./index";
 
 // const {Contenedor} = require("Contenedor")
 
