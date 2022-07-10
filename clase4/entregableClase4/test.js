@@ -4,12 +4,18 @@ const Contenedor = require("./Contenedor");
 const objeto1 = {
     title: "Escuadra",
     price: 250, 
-    thumbnail: "urlImg"
+    thumbnail: "https://i.postimg.cc/qtkwFSzG/escuadra.jpg"
 }
 const objeto2 = {
     title: "Regla",
     price: 150, 
-    thumbnail: "urlImg"
+    thumbnail: "https://i.postimg.cc/0zGZcP2Q/regla.jpg"
+}
+const objeto3 = {
+    "id": 3,
+    "title": "Block de hojas",
+    "price": 300,
+    "thumbnail": "https://i.postimg.cc/cvGXRrW2/block.jpg"
 }
 // creo el objeto productos como instancia de la clase Contenedor
 const productos = new Contenedor("productos.txt")
