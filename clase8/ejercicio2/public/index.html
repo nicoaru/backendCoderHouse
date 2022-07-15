@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=>, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form action="/personas/" method="post">
+        <h2>Cargar personas</h2>
+        <label for="nombrePersona" >Nombre: </label> <input type="text" id="nombrePersona" name="nombre">
+        <label for="apellidoPersona" >Apellido: </label> <input type="text" id="apellidoPersona" name="apellido">
+        <label for="edadPersona">Edad: </label> <input type="number" id="edadPersona" name="edad">
+        <input type="submit" value="Cargar persona">
+    </form>
+    <form action="/personas/" method="get">
+        <input type="submit" value="Get list personas">
+    </form>
+    <form action="/mascotas/" method="post">
+        <h2>Cargar mascotas</h2>
+        <label for="nombreMascota">Nombre: </label> <input type="text" id="nombreMascota" name="nombre">
+        <label for="razaMascota">Raza: </label> <input type="text" id="razaMascota" name="raza">
+        <label for="edadMascota">Edad: </label> <input type="number" id="edadMascota" name="edad">
+        <input type="submit" value="Cargar mascota">
+    </form>
+    <form action="/mascotas/" method="get">
+        <input type="submit" value="Get list mascotas">
+    </form>
+</body>
+</html>
