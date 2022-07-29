@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.7/handlebars.min.js" integrity="sha512-RNLkV3d+aLtfcpEyFG8jRbnWHxUqVZozacROI4J2F1sTaDqo1dPQYs01OMi1t1w9Y2FdbSCDSQ2ZVdAC8bzgAg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <title>Clase 9 - Ejercicio 1</title>
+</head>
+<body>
+    <h1>Datos personales</h1>
+    <div id="datosPersonales"></div>
+    <h2>Comentarios</h2>
+    <div id="comentarios"></div>
+
+
+
+
+    <script>
+        const plantillaDatosPersonales =
+        `<ul>
+            <li>Nombre: {{nombre}}</li>
+            <li>Apellido: {{apellido}}</li>
+            <li>Email: {{email}}</li>
+            <li>Edad: {{edad}}</li>
+            <li>Teléfono: {{telefono}}</li>
+        </ul>`
+
+        const plantillaComentarios = 
+        `{{#if comentarios}}
+            {{#each comentarios}}
+                <h3>User: {{this.user}}</h3>
+                <p>{{this.text}}</p>
+            {{/each}}
+        {{/if}}`
+
+
+        
+
+
+        const templateDatosPersonales = Handlebars.compile(plantillaDatosPersonales); // compila la plantilla
+        const datosPersonales = {nombre: 'Nicolás', apellido: 'Aruguete', email: 'nico@aru.com', edad: 35, telefono: '4856-8696'}
+        const htmlDatosPersonales = templateDatosPersonales(datosPersonales); // genera el html
+        document.getElementById('datosPersonales').innerHTML = htmlDatosPersonales; // inyecta el resultado en la vista
+
+        const templateComentarios = Handlebars.compile(plantillaComentarios)
+        const comentarios = {comentarios: [{text: "Qué super se ve tu sitio", user: "jlopez"},
+                            {text: "Hola", user: "smorgan"}]}
+        const htmlComentarios = templateComentarios(comentarios)
+        document.getElementById('comentarios').innerHTML = htmlComentarios; // inyecta el resultado en la vista
+
+
+
+
+</script>
+
+    </script>
+</body>
+</html>

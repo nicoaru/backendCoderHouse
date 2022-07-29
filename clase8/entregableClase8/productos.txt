@@ -1,0 +1,8 @@
+[
+  {
+    "id": 1,
+    "title": "Papelotes",
+    "price": 550,
+    "thumbnail": "imgUrl"
+  }
+]
