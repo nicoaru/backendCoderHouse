@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Clase 9 - Ejercicio 3</title>
+    </head>
+    <body>
+        <%-include("../partials/header.ejs")%>
+        <div> 
+            <h1 style="color: blue"> <%- titulo %> </h1>
+            <span><%= min%></span>
+            <meter value=nivel min=min max=max style="width:100px"></meter>
+            <span><%= max%></span>
+        </div>
+        <%-include("../partials/footer.ejs")%>
+
+    </body>
+</html>
+
+
+

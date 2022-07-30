@@ -1,0 +1,12 @@
+<div>
+    <% if(historial.length > 0) {
+        historial.forEach(element => {%>
+            <span>Nombre: </span> <%= element.nombre%>
+            <span>Apellido: </span> <%= element.apellido%>
+            <span>Edad: </span> <%= element.edad%>
+            <br>
+        <%})%>
+    <% } else {%>
+        <h4>No se encontraron datos</h4>
+    <%}%>
+</div>
