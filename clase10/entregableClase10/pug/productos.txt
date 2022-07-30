@@ -1,0 +1,20 @@
+[
+  {
+    "id": 1,
+    "title": "sf",
+    "price": "46",
+    "thumbnail": "https://cdn3.iconfinder.com/data/icons/education-209/64/microscope-lab-science-school-256.png"
+  },
+  {
+    "id": 2,
+    "title": "Mochila",
+    "price": "250",
+    "thumbnail": "https://cdn3.iconfinder.com/data/icons/education-209/64/bag-pack-container-school-256.png"
+  },
+  {
+    "id": 3,
+    "title": "cosita",
+    "price": "25",
+    "thumbnail": "https://cdn3.iconfinder.com/data/icons/education-209/64/book-note-paper-school-256.png"
+  }
+]

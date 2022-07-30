@@ -1,0 +1,24 @@
+<h2>Cargar un producto</h2>
+<form action="/productos" method="post">
+    <div class="col-lg-3 mt-2">
+        <label for="title" class="visually-hidden">Title</label>
+        <input type="text" id="title" name="title" placeholder="Title" class="form-control" required>
+    </div>
+    <div class="col-lg-3 mt-2">
+        <label for="price"  class="visually-hidden">Price</label>
+        <input type="text" id="price" name="price" placeholder="Price" class="form-control" required>
+    </div>
+    <div class="col-lg-3 mt-2">
+        <label for="thumbnail"  class="visually-hidden">Thumbnail</label>
+        <input type="text" id="thumbnail" name="thumbnail" placeholder="Thmbnail" class="form-control" required>
+    </div>
+    <button type="submit" class="btn btn-primary mt-2">Cargar</button>
+
+
+</form>
+
+<form action="/productos" method="get">
+    <button type="submit" class="btn btn-primary mt-2">Ver productos</button>
+</form>
+
+{{!--  --}}
