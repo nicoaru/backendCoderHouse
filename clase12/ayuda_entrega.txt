@@ -1,0 +1,36 @@
+socket.on('productosActualizado', (dato) => {
+    fetch('http://localhost:8080/table.handlebars')
+        .then(data => data.text())
+        .then(response => {
+            let nuevoRender = Handlebars.compile(response);
+            let html = nuevoRender({ listaDeProductos: dato });
+            document.getElementById('destino').innerHTML = html;
+        })
+})
+
+
+//
+
+
+...
+const app = express();
+const httpServer = new HttpServer(app);
+const io = new socket...
+...
+
+app.use('/api/productos', rutas);
+app.get('/', (req, res) => {
+    res.render('./table', {lista...});
+})
+
+
+io.on('connection', (socket) => {
+
+    cargarProductos(); //envia productos cuando alguien se conecta
+    
+    . ...
+    socket.on('nuevoMensaje', (dato) => {
+        ...
+
+    })
+})
