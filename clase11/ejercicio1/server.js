@@ -15,7 +15,7 @@ const httpServer = new HTTPServer(app)
 const socketServer = new SocketServer(httpServer) 
 
 // conecto servidor
-const PORT = process.env.PORT || 8080
+const PORT = process.env.PORT || 8081
 const server = httpServer.listen(PORT, () => console.log(`Servidor escuchando en puerto ${server.address().port}`))
 .on("error", error => console.log(`Error conectando al servidor => ${error.message}`))
 
