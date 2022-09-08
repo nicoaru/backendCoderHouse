@@ -1,1 +1,0 @@
-en los endpoint que corresponda pueden tener un middleware que con un boolean siga si es admin o user.
