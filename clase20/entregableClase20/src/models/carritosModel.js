@@ -3,7 +3,7 @@ const {Schema, model} = mongoose
 
 
 const CarritoSchema = new Schema({
-    productos: {type: Array, required: true},
+    productos: {type: Array, required: true, default: []},
 }, {timestamps: true});
   
   

@@ -14,8 +14,7 @@ class CarritosDaoMongoDB extends ContenedorMongoDB {
 }
 
   saveCarrito(req, res) {
-      let producto = req.body
-      this.save(producto)
+      this.save()
       .then(data => res.json(data))
       .catch(error => res.status(400).json(error))
   }

@@ -1,24 +1,15 @@
-import { dbType } from "../config.js";
-import * as DAOs from "../daos/daos.js";
+import { Carritos} from "../daos/daos.js";
 import { Router } from "express"
 const routerCarritos = Router()
 
-// defino cual DAO importo, segun la base de datos configurada en config.js
-let Carritos
-switch (dbType) {
-    case "MongoDB":
-        Carritos = DAOs.CarritosMongoDB
-        break;
-    case "Firebase":
-        Carritos = DAOs.CarritosFirebase
-        break;
-    default:
-        break;
-}
+
 
 
 // crea un carrito nuevo
 routerCarritos.post("/", (req, res) => {Carritos.saveCarrito(req, res)} )
+
+// devuelve todos los carritos
+routerCarritos.get("/", (req, res) => {Carritos.getAllCarritos(req, res)} )
 
 // elimina un carrito
 routerCarritos.delete("/:id", (req, res) => {Carritos.deleteCarritoById(req, res)} )
