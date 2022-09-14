@@ -4,5 +4,17 @@
     "title": "Papelotes",
     "price": 550,
     "thumbnail": "imgUrl"
+  },
+  {
+    "id": 2,
+    "title": "aadsds",
+    "price": "54654",
+    "thumbnail": "https://cdn3.iconfinder.com/data/icons/education-209/64/book-note-paper-school-256.png"
+  },
+  {
+    "id": 3,
+    "title": "nombre",
+    "price": "56",
+    "thumbnail": "adckadsdx"
   }
 ]
