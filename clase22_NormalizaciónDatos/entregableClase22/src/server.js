@@ -65,14 +65,14 @@ socketServer.on("connection", async (socket) => {
                 // console.log("normalized => ", normalizedMsgs)
                 // const denormalizedMsgs = denormalizeMensajes(normalizedMsgs)
                 // console.log("DEnormalized => ", denormalizedMsgs)
-                socket.emit("INIT_MESSAGES", normalizedMsgs)
+                socketServer.emit("INIT_MESSAGES", normalizedMsgs)
         
                 // socket.emit("INIT_MESSAGES", allMessages)
             })
             .catch((e) =>{
                 const error = {error: true, message: "Hubo un error intentando descargar los mensajes"}
                 console.log(e)
-                socket.emit("INIT_MESSAGES", error)
+                socketServer.emit("INIT_MESSAGES", error)
             })
 
         })
