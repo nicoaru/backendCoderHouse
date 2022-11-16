@@ -1,0 +1,36 @@
+{{#if productos}}  
+    <table class="table">
+        <thead>
+                <tr>
+                    <th scope="col">Nombre</th>
+                    <th scope="col">Precio</th>
+                    <th scope="col">Stock</th>
+                    <th scope="col">Descripción</th>
+                    <th scope="col">Código</th>
+                    <th scope="col">Imagen</th>
+                    <th scope="col"></th>
+                </tr>
+        </thead>
+        <tbody>
+            {{#each productos}}
+                <tr id="product-{{this.id}}">
+                    <th scope="row">{{this.nombre}}</th>
+                    <td class="mr-5">${{this.precio}}</td>
+                    <td class="mr-5">{{this.stock}}</td>
+                    <td class="mr-5">{{this.descripcion}}</td>
+                    <td class="mr-5">{{this.codigo}}</td>
+                    <td class="mr-5"><img src="{{this.thumbnail}}" width="50px" alt="imagen de {{this.title}}"></td>
+                    <td class="mr-5"><img src="https://cdn4.iconfinder.com/data/icons/essentials-72/24/039_-_Cross-512.png" width="20px" alt="imagen de cruz" onclick="handleDeleteProducto(event)" data-productid="{{this.id}}"></td>
+                </tr>
+
+            {{/each}}
+        </tbody>
+    </table>
+{{else}}
+    <p>No hay productos cargados</p>
+{{/if}}
+
+
+{{!-- <form action="/" method="get">
+    <button type="submit" class="btn btn-primary mt-2">Cargar productos</button>
+</form> --}}

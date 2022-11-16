@@ -1,48 +1,22 @@
-const passport = require('passport')
-const LocalStrategy = require('passport-local').Strategy
-const { createHash, compareHash } = require('./utils/utils.js')
+const passport =require("passport")
+const GoogleStrategy = require('passport-google-oauth2').Strategy;
+const { googleClientID, googleClientSecret } = require('./config.js')
 
+passport.serializeUser(function(user, done) {
+    done(null, user);
+});
 
-passport.use('login', new LocalStrategy( async (username, password, done) => {
-    try {
-        const _user = await Users.findOne({username: username})
+passport.deserializeUser(function(user, done) {
+        done(null, user);
+});
 
-        if(!_user || !(compareHash(password, _user.password))){
-            return done(null, false, {result: "Usuario o contraseña incorrectos"})
-        }
-        else {
-            delete _user.password
-            return done(null, _user)
-        }
+passport.use(new GoogleStrategy({
+        clientID:googleClientID,
+        clientSecret:googleClientSecret,
+        callbackURL: "http://localhost:8080/google/callback",
+        passReqToCallback: true
+    },
+    function(request, accessToken, refreshToken, profile, done) {
+            return done(null, profile);
     }
-    catch(error) {
-        return done(error, false)
-    }    
-}))
-
-passport.use('signup', new LocalStrategy({passReqToCallback: true}, async (req, username, password, done) => {
-    try {
-        let _user = await Users.findOne({username: username})
-        if(_user) {
-            return done(null, false, {result: 'Nombre de usuario ya existente'})
-        }
-        else {
-            _user = new Users({
-                username: req.body.username, 
-                password: createHash(req.body.password),
-                email: req.body.email, 
-                telephone: req.body.telephone
-            })
-            _user = await _user.save()
-            delete _user.password
-            return done(null, _user)
-        }
-    }
-    catch(error) {
-        return done(error, false)
-    }
-}))
-
-
-
-
+));

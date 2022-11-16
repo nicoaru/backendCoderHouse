@@ -39,10 +39,11 @@ socketServer.on("connection", async (socket) => {
     // INIT_MESSAGES - EMIT - (manda historial de mensajes al conectarse un cliente)
     MensajesDAO.getAllMensajes()
     .then(allMessages => {
+        console.log("allMessages => ", allMessages)
         const normalizedMsgs = normalizeMensajes(allMessages)
         // console.log("normalized => ", normalizedMsgs)
         const denormalizedMsgs = denormalizeMensajes(normalizedMsgs)
-        console.log("DEnormalized => ", denormalizedMsgs)
+        // console.log("DEnormalized => ", denormalizedMsgs)
         socket.emit("INIT_MESSAGES", normalizedMsgs)
         // socket.emit("INIT_MESSAGES", allMessages)
     })

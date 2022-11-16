@@ -1,0 +1,25 @@
+body {
+    padding: 10px;
+}
+#msgContainer {
+    height: 300px;
+    overflow: auto;
+}
+
+.productsSection {
+    padding: 10px;
+}
+
+.chatSection {
+    display: flex;
+    flex-wrap: column nowrap;
+    padding: 10px;
+}
+
+.chatInputsContainer {
+    border: none;
+}
+
+.toast-container {
+    transform: translateY(-100%);
+}

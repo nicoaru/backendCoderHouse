@@ -1,0 +1,11 @@
+#itemsContainer {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+    align-items: stretch;
+
+}
+
+.item-card {
+    margin: 20px 20px;
+}

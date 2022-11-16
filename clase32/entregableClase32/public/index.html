@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- HandleBars CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.7/handlebars.min.js" integrity="sha512-RNLkV3d+aLtfcpEyFG8jRbnWHxUqVZozacROI4J2F1sTaDqo1dPQYs01OMi1t1w9Y2FdbSCDSQ2ZVdAC8bzgAg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <!-- Bootstrap CSS only -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
+    <!-- style -->
+    <link rel="stylesheet" href="./static/css/style.css">
+    
+    <title>Document</title>
+</head>
+
+<body>
+    <!-- Productos -->
+    <div class="card col-md-8 col-lg-6 mx-auto mb-3">
+        <div class="card-body d-flex justify-content-between">
+            <h3 style="size: 18px">Bienvenido <span class="userNameContainer"></span></h3>
+            <button class="btn btn-outline-secondary" onclick="handleLogout(event)">Desloguearse</button>
+        </div>
+    </div>
+
+    <div class="productsSection card col-md-8 col-lg-6 mx-auto">
+        <div>
+            <button class="btn btn-outline-secondary" type="button" id="verProductosButton" onclick="handleVerProductos(event)">Ver Productos</button>
+        </div>
+        <div id="productsContainer">
+            <!-- acá se insertan los productos -->
+        </div>
+
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="logoutModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header" id="logoutModalMessage">
+                    <h3 class="modal-title" id="exampleModalLabel">Hasta luego <span class="userNameContainer"></span></h3>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+        <!-- Chat -->
+        <div class="card chatSection mx-auto col-md-8 col-lg-6 mt-3">
+            <div class="card-body">
+                <h3>Mensajes</h3>
+               
+                <div class="vstack gap-3" id="msgContainer"> 
+                    <!-- acá se insertan los mensajes -->
+                </div>
+            </div>
+            <div class="card chatInputsContainer">
+                <!-- Input Texto del mensaje -->
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Mensaje..." id="msgTextInput" aria-label="">
+                    <button class="btn btn-outline-secondary position-relative" type="button" onclick="handleSendMessage(event)">Enviar</button>
+                    <!-- toast alert -->
+                    <div class="toast-container top-0 end-0 p-2">
+                        <div id="sendMessageToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+                            <div class="toast-body d-flex justify-content-between">
+                                <span>Debes loggearte con tu email para mandar mensajes! :)</span>
+                                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- . -->
+                </div>
+            </div>    
+        </div>
+    
+    
+
+
+
+
+    <!--- ojo es muy importante el orden de los script para que index.js pueda utilizar de socjet.io, debe estar luego que el script de socket.io -->
+    <!-- Bootstrap JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous"></script>
+    <!-- socket.io -->    
+    <script src="/socket.io/socket.io.js"></script>
+    <!-- <script src="https://cdn.socket.io/4.5.0/socket.io.min.js" 
+    integrity="sha384-7EyYLQZgWBi67fBtVxw60/OWl1kjsfrPFcaU0pp0nAh+i8FD068QogUvg85Ewy1k" 
+    crossorigin="anonymous"></script> -->
+    <script src="./static/js/index.js"></script>
+    <script src="./static/js/chat.js"></script>
+    <script src="./static/js/login.js"></script>    
+    <script src="./static/js/products.js"></script>
+
+</body>
+</html>
