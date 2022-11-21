@@ -22,12 +22,21 @@ class ContenedorMongoDB {
         const _object = new this.model(object)
         return _object.save()  
     }
+    //Guarda varios productos nuevos
+    saveMany(array) {
+        return this.model.insertMany(array)
+    }
+
+
     // Devuelve el objeto con el id indicado
     getById(id) {
         return this.model.findOne({_id: id})
     }
     // Devuelve el objeto que cumple el filtro
     getByFilter(filterObj) {
+        return this.model.find(filterObj)
+    }
+    getOneByFilter(filterObj) {
         return this.model.findOne(filterObj)
     }
     // elimina el objeto con el id indicado

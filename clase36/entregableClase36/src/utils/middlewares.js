@@ -18,7 +18,7 @@ const isLogged = (req, res, next) => {
     }
     else {
         console.log("No está logueado")
-        res.redirect('/login')
+        res.status(401).json({error: true, loged: "false", message: 'Not loged', user: req.user})
     }
 }
 

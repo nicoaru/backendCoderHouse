@@ -1,24 +1,21 @@
-const {generateDataProducts} = require('./utils/fakeDataGenerator.js')
-const {generateRandom} = require('./calculo.js')
 const { isLogged } = require('./utils/middlewares.js')
 const controllers = require('./controllers.js')
-const {args} = require('./args.js')
-const {NODE_ENV} = require('./config.js')
-const {fork} = require('child_process')
 const compression = require('compression')
 const gzipMiddleware = compression()
 const express = require("express")
 const {Server: HTTPServer} = require("http")
 const {Server: SocketServer} = require("socket.io")
 const {MensajesDAO} = require('./daos/daos.js')
-
-
+const {ProductosDAO} = require('./daos/daos.js')
+const {routerProductos} = require('./routes/routerProductos.js')
+const {routerCarritos} = require('./routes/routerCarritos.js')
+const {routerPedidos} = require('./routes/routerPedidos.js')
+const {generateDataProducts} = require('./utils/fakeDataGenerator.js')
 const session = require('express-session')
-const MongoStore = require('connect-mongo')
+const MongoStore = require('connect-mongo') //conecta express-session a mongoDB
 const {uriStringMongo} = require('./config.js')
+const {sendMail} = require('./nodeMailer.js')
 
-const passport = require('passport');
-require('./passport.js')
 
 const {logger, logEndpoint} = require("./logger_config.js");
 
@@ -27,42 +24,41 @@ const {logger, logEndpoint} = require("./logger_config.js");
 
 
 
-
+const passport = require('passport');
+require('./passport.js')
 //EXPRESS
 const app = express()
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
-app.use('/static', express.static('public'))
+// app.use('/static', express.static('public'))
 app.use(session({
-    store: new MongoStore({
-        mongoUrl: uriStringMongo,
-        ttl: 60 * 10,
-        retries: 0
-    }),
     secret: 'STRING_SECRETA',
     resave: false,
-    saveUninitialized: false
-}))
-app.use(passport.initialize())
-app.use(passport.session())
+    saveUninitialized: true,
+    store: new MongoStore({
+      mongoUrl: uriStringMongo,
+      retries: 0,
+      ttl: 60 * 10, // 10 minutos
+    }),
+  })
+);
 app.use(logEndpoint)
 app.use(gzipMiddleware)
+app.use(passport.initialize())
+app.use(passport.session())
+app.use("/api/productos", routerProductos)
+app.use("/api/carritos", routerCarritos)
+app.use("/api/pedidos", routerPedidos)
 
 
-// '/'
-app.get('/', isLogged, (req, res) => {
-    res.sendFile('index.html', {root: './public/'})
-})
 
 // '/session'
 app.get('/session', isLogged, (req, res) => {
+    console.log("/session req.user ", req.user)
     res.json(req.user)
 })
 
 // '/login'
-app.get('/login', (req, res) => {
-    res.sendFile('login.html', {root: './public/'})
-})
 app.post("/login", passport.authenticate("login"), (req, res) => {
         console.log('line 127 . Autenticado Ok')    
         res.status(200).json(req.user)
@@ -70,30 +66,35 @@ app.post("/login", passport.authenticate("login"), (req, res) => {
 
 // '/logout'
 app.delete('/logout', isLogged, (req, res) => {
-    req.logout((error) => {
-        if(error) {
-            console.log("line 109 . error logout => ", error)
-            res.json(error)
+    req.logout((err) => {
+        if(err) {
+            console.log("error logout => ", err)
+            const error = {ok: false, error: true, message:"Error intentando cerrar sesión... por las dudas intentá de nuevo"}
+            res.status(400).json(error)
         }
         else {
-            console.log("line 115 => deslogueado")
-            res.status(200).json({proceso: 'ok'})        
+            console.log("deslogueado")
+            res.status(200).json({ok: true, loged: "false", user: req.user})        
         }
     })
 
 })
 
 // '/signup'
-app.get('/signup', (req, res) => {
-    res.sendFile('signup.html', {root: './public/'})
-})
-app.post('/signup', controllers.getSignup)
+app.post('/signup', controllers.postSignup)
 
+// '/gaenerateProductosFake'
+app.post('/generateProductosFake', async (req, res) => {
+    
+    const productsArray = generateDataProducts(10)
+    const _result = await ProductosDAO.saveMany(productsArray)
+    console.log("fake products result ", _result)
+})
 
 // ruta no existente
 app.use(function(req, res, next) {
     logger.warn(`Ruta ${req.url} - método ${req.method} - no existe`)
-    res.json({error: -2, descripcion: `Ruta ${req.baseUrl}${req.url}, método ${req.method}, no existe`});
+    res.status(400).json({error: true, message: `Ruta ${req.baseUrl}${req.url}, método ${req.method}, no existe`});
     next();
 });
 

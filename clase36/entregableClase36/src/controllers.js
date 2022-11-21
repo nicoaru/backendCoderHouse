@@ -1,14 +1,17 @@
 const { createHash, validateEmail } = require('./utils/utils.js')
 const {UsersDAO} = require('./daos/daos.js')
+const {CarritosDAO} = require('./daos/daos.js')
+const {sendMail} = require('./nodeMailer')
 
-const getSignup = async (req, res) => {
+const postSignup = async (req, res) => {
+    console.log("Entró en POST /signup")
     try {
-        let _user = await UsersDAO.getByFilter({$or: [{ usename: req.body.username }, { email: req.body.email }]})
-        // console.log(`line 127 . _user => `, _user)
-
+        let _user = await UsersDAO.getOneByFilter({$or: [{ username: req.body.username }, { email: req.body.email }]})
+        console.log("body ", req.body)
+        console.log("_user ", _user)
 
         if(!req.body.username || !req.body.email || !req.body.password || !validateEmail(req.body.email)) {
-            console.log(`line 122 . failed signp => `, 'Usuario, Email válido y Contraseña son obligatorios')
+            console.log(`failed signup => `, 'Usuario, Email válido y Contraseña son obligatorios')
            res.status(400).json({error: true, message: 'Usuario, Email válido y Contraseña son obligatorios'})
         }
         else if (_user) {
@@ -22,26 +25,40 @@ const getSignup = async (req, res) => {
         else {
             _newUser = {
                 username: req.body.username, 
+                name: req.body.name,
                 password: createHash(req.body.password),
                 email: req.body.email, 
                 telephone: req.body.telephone, 
-                avatar: req.body.avatar
+                address: req.body.address,
+                imgurl: req.body.imgurl
             }
             UsersDAO.save(_newUser)
-            .then(user => {
-                console.log(`line 139 . usuario creado => `, user)
+            .then(async user => {
+                console.log(`usuario creado => `, user)
+                CarritosDAO.save({userId: user._id})
+
+
+                const emailSubject = "Nuevo resgitro"
+                const emailHtmlBody = `<h3>Nombre: ${user.name}</h3>
+                                        <h3>Usuario: ${user.username}</h3>
+                                        <h3>Email: ${user.email}</h3>
+                                        <h3>Teléfono: ${user.telephone}</h3>
+                                        <h3>Dirección: ${user.address}</h3>
+                                        <h3>Avatar: <img src="${user.imgurl}" alt="imagen de usuario" width="100px"/> </h3>`
+                const adminEmailResult = await sendMail(emailSubject, emailHtmlBody)
+                console.log("Signup admin notification result ", adminEmailResult)
                 res.status(200).json(user)
             })
             .catch(error => {
-                console.log('line 143 . error _newUser.save( )=> ', error)
+                console.log('error _newUser.save( )=> ', error)
                 throw error
             })
         }
     }
     catch(error) {
-        console.log(`line 149 . Error signup => `, error)
+        console.log(`Error signup => `, error)
         res.status(500).json({error: 500, message: 'Internal server error'})
     }
 }
 
-module.exports = { getSignup }
+module.exports = { postSignup }
