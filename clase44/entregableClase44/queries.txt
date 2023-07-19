@@ -1,0 +1,219 @@
+# query {
+#   getProducts {
+#     id,
+#     nombre,
+#     descripcion,
+#     categoria,
+#     precio,
+#     stock
+#   }
+# }
+  
+# query  	{
+#     getProductById(id: "639a0c9f4a85c4d9dd557ea7") {
+#       id,
+#       nombre,
+#       descripcion,
+#       categoria,
+#       precio,
+#       stock
+#     }
+#   }
+
+# mutation {
+#   saveProducts(input: {
+#         nombre: "Pelota de cuero n° 5",
+#         descripcion: "Pelota de fútbol",
+#         categoria: "Juguetes",
+#         codigo: "2354sdassfd",
+#         imgUrl: "StringDeLaImagenURL",
+#         precio: 50,
+#         stock: 15
+#   }) {
+#   	id,
+#     nombre,
+#     descripcion,
+#     precio,
+#     stock
+#   }
+# }
+
+# mutation {
+#   updateProductById(input: {
+#         precio: 10,
+#         stock: 5
+#   }, id: "639a0c9f4a85c4d9dd557ea7") {
+#   	id,
+#     nombre,
+#     descripcion,
+#     precio,
+#     stock
+#   }
+# }
+
+# mutation {
+#   deleteProductById(id: "6398bf00df5096b3f3e953ae") {
+# 		acknowledged,
+#     deletedCount
+#   }
+# }
+
+# mutation {
+#   createUser(input: {
+#         username: "fulanito4",
+#         name: "Fulanito4 de Tal",
+#         password: "1234",
+#         email: "fulanito4detal@gmail.com"   
+#   }) {
+#     _id,
+#     username,
+#     name
+#   }
+# }
+
+# query {
+# 	getCarrito(userId: "637c00f767f0253829cba0c5") {
+#     userId,
+#     productos {
+#       producto {
+#       	nombre,
+# 				descripcion,
+# 				categoria,
+# 				precio,
+# 				stock
+#       },
+#       cantidad
+#     }
+#   }
+# }
+
+# query {
+# 	getProductosCarrito(userId: "637c00f767f0253829cba0c5") {
+# 				producto {
+#           nombre,
+#           descripcion,
+#           categoria,
+#           precio,
+#           stock
+# 				},
+# 				cantidad
+#   }
+# }
+
+# mutation {
+#   saveItemCarrito(userId: "637c00f767f0253829cba0c5", input: {
+#         producto: {
+#           nombre: "Intelligent Cotton Chicken",
+#           descripcion: "The Apollotech B340 is an affordable wireless mouse with reliable connectivity, 12 months battery life and modern design",
+#           categoria: "Ropa",
+#           precio: 241,
+#           stock: 149
+#         },
+#         cantidad: 4
+#   }) {
+#     userId,
+#     productos {
+#       producto {
+#       	nombre,
+#     		descripcion,
+#     		categoria,
+#     		precio,
+#     		stock
+#       },
+#       cantidad
+#     }    
+#   }
+# }
+
+# mutation {
+#   saveItemCarrito(userId: "637c00f767f0253829cba0c5", input: {
+#         producto: {
+#           nombre: "Elegant Fresh Chair",
+#           descripcion: "The automobile layout consists of a front-engine design, with transaxle-type transmissions mounted at the rear of the engine and four wheel drive",
+#           categoria: "Art. de libreria",
+#           precio: 1457,
+#           stock: 581
+#         },
+#         cantidad: 10
+#   }) {
+#     userId,
+#     productos {
+#       producto {
+#       	nombre,
+#     		descripcion,
+#     		categoria,
+#     		precio,
+#     		stock
+#       },
+#       cantidad
+#     }    
+#   }
+# }
+
+# query {
+# 	getCarrito(userId: "637c00f767f0253829cba0c5") {
+#     userId,
+#     productos {
+#       producto {
+#       	nombre,
+# 				categoria,
+# 				precio
+#       },
+#       cantidad
+#     }
+#   }
+# }
+
+# query {
+#   getPedidos(userId: "637c00f767f0253829cba0c5") {
+#         id,
+#         userId,
+#         nombre,
+#         email,
+#         direccion       
+#         items {
+#         	producto {
+#           nombre,
+#           categoria, 
+#           precio
+#           },
+#           cantidad
+#         },
+#         precioTotal 
+#   }
+# }
+
+# mutation {
+#   savePedido(userId: "637c00f767f0253829cba0c5") {
+#         id,
+#         userId,
+#         nombre,
+#         email,
+#         direccion       
+#         items {
+#         	producto {
+#           nombre,
+#           categoria, 
+#           precio
+#           },
+#           cantidad
+#         },
+#         precioTotal 
+#   }
+# }
+
+# mutation { 
+# 	deleteItemsCarrito(userId:"637c00f767f0253829cba0c5") {
+#     userId,
+#     productos {
+#       producto {
+#       	nombre,
+#     		descripcion,
+#     		categoria,
+#     		precio,
+#     		stock
+#       },
+#     	cantidad
+#     }
+#   }
+# }

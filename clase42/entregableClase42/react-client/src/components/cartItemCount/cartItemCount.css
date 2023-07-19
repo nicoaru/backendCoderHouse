@@ -1,0 +1,36 @@
+* {
+    box-sizing: border-box;
+}
+
+/* .itemCountContainer {
+    width: 100%;
+    padding: 5px;
+    background-color: rgb(238, 235, 235);
+    border-radius: 5px;
+}
+.itemCountContainer .p {
+    color: grey;
+} */
+
+.cartItemCount {
+    margin-bottom: 5px;
+    padding: 5px;
+    border-radius: 3px;
+    border: 1px solid grey;
+    display: flex;
+    flex-flow: row nowrap;
+    /*justify-content: center;*/
+}
+
+.cartItemCount .restarItem, .cartItemCount .sumarItem {
+    color: rgb(72, 72, 204);
+    padding: 0px 5px 0px 5px;
+}
+.cartItemCount .restarItem:hover, .cartItemCount .sumarItem:hover {
+    cursor: pointer;
+}
+
+.amount {
+    flex-grow: 2;
+    text-align: center;
+}

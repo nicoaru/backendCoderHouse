@@ -1,20 +1,18 @@
-const { isLogged } = require('./utils/middlewares.js')
-const controllers = require('./service/cotrollers/controllers.js')
 const compression = require('compression')
 const gzipMiddleware = compression()
 const express = require("express")
 const {Server: HTTPServer} = require("http")
 const {Server: SocketServer} = require("socket.io")
 const {MensajesDAO} = require('./model/daos/daos.js')
-const {ProductosDAO} = require('./model/daos/daos.js')
 const {routerProductos} = require('./api/routerProductos.js')
 const {routerCarritos} = require('./api/routerCarritos.js')
 const {routerPedidos} = require('./api/routerPedidos.js')
-const {generateDataProducts} = require('./utils/fakeDataGenerator.js')
+const {routerUsers} = require('./api/routerUsers.js')
+const {routerFake} = require('./api/routerFake.js')
 const session = require('express-session')
 const MongoStore = require('connect-mongo') //conecta express-session a mongoDB
 const {uriStringMongo} = require('./config/config.js')
-
+const passport = require('passport');
 
 const {logger, logEndpoint} = require("./profilling/logger_config.js");
 
@@ -23,13 +21,14 @@ const {logger, logEndpoint} = require("./profilling/logger_config.js");
 
 
 
-const passport = require('passport');
-require('./service/passport.js')
+
+
 //EXPRESS
 const app = express()
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
 // app.use('/static', express.static('public'))
+// session
 app.use(session({
     secret: 'STRING_SECRETA',
     resave: false,
@@ -41,55 +40,18 @@ app.use(session({
     }),
   })
 );
+// some middlewares
 app.use(logEndpoint)
 app.use(gzipMiddleware)
+// passport
 app.use(passport.initialize())
 app.use(passport.session())
+// routes
 app.use("/api/productos", routerProductos)
 app.use("/api/carritos", routerCarritos)
 app.use("/api/pedidos", routerPedidos)
-
-
-
-// '/session'
-app.get('/session', isLogged, (req, res) => {
-    console.log("/session req.user ", req.user)
-    res.json(req.user)
-})
-
-// '/login'
-app.post("/login", passport.authenticate("login"), (req, res) => {
-        console.log('line 127 . Autenticado Ok')    
-        res.status(200).json(req.user)
-});
-
-// '/logout'
-app.delete('/logout', isLogged, (req, res) => {
-    req.logout((err) => {
-        if(err) {
-            console.log("error logout => ", err)
-            const error = {ok: false, error: true, message:"Error intentando cerrar sesión... por las dudas intentá de nuevo"}
-            res.status(400).json(error)
-        }
-        else {
-            console.log("deslogueado")
-            res.status(200).json({ok: true, loged: "false", user: req.user})        
-        }
-    })
-
-})
-
-// '/signup'
-app.post('/signup', controllers.postSignup)
-
-// '/gaenerateProductosFake'
-app.post('/generateProductosFake', async (req, res) => {
-    
-    const productsArray = generateDataProducts(10)
-    const _result = await ProductosDAO.saveMany(productsArray)
-    console.log("fake products result ", _result)
-})
-
+app.use("/api/users", routerUsers)
+app.use("/fake", routerFake)
 // ruta no existente
 app.use(function(req, res, next) {
     logger.warn(`Ruta ${req.url} - método ${req.method} - no existe`)
@@ -189,58 +151,3 @@ module.exports = {connectServer}
 
 
 
-// app.get('/api/productos-test', isLogged, (req, res) => {
-//     try {
-//         const randomProducts = generateDataProducts(5)
-//         // console.log(`productos-test en puerto ${serverActualPort}, proceso ${process.pid}`)
-//         res.json(randomProducts)        
-//     }
-
-//     catch(error) {
-//         logger.error(`Error en ${req.url} - método ${req.method} - ${error.message}`)
-//         res.status(400).json({error: {status: 400, message: error.message}})
-//     }
-// })
-
-// // '/info'
-// app.get('/info', (req, res) => {
-//     try {
-//         const respuesta = {
-//             argumentos: args,
-//             pathEjecucion: process.execPath,
-//             sistemaOperativo: process.platform,
-//             processId: process.pid,
-//             nodeVersion: process.version,
-//             carpeta: process.cwd(),
-//             memoriaTotalReservada: process.memoryUsage.rss()
-//              puerto: serverActualPort
-//         }
-//         res.status(200).json(respuesta)
-//     }
-//     catch(error) {
-//         logger.error(`Error en ${req.url} - método ${req.method} - ${error.message}`)
-//         res.status(400).json({error: {status: 400, message: error.message}})
-//     }
-// })
-
-// // '/api/randoms'
-// app.get('/api/randoms', (req, res) => {
-//     try {
-//         const cant = req.query.cant || 10000000
-//         const calculo = generateRandom(cant)
-//         res.send({info: `Servidor escuchando en puerto ${serverActualPort}, corriendo en proceso ${process.pid}`, resultado: calculo})
-        
-//         // const cant = req.query.cant || 10000000
-//         // const calculo = fork('./src/calculo.js')
-//         // calculo.send(cant)
-//         // calculo.on('message', (resultado) => {
-//         //     res.send({info: `Servidor escuchando en puerto ${serverActualPort}, corriendo en proceso ${process.pid}`, resultado})
-//         // })        
-//     }
-//     catch(error) {
-//         logger.error(`Error en ${req.url} - método ${req.method} - ${error.message}`)
-//         res.status(400).json({error: {status: 400, message: error.message}})
-//     }
-// })
-
-// '/'

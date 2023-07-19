@@ -16,5 +16,17 @@
     "title": "nombre",
     "price": "56",
     "thumbnail": "adckadsdx"
+  },
+  {
+    "id": 4,
+    "title": "cosa",
+    "price": "250",
+    "thumbnail": "fslkdlsd"
+  },
+  {
+    "id": 5,
+    "title": "sdf",
+    "price": "1564",
+    "thumbnail": "lklj"
   }
 ]

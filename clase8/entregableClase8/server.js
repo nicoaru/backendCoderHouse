@@ -53,6 +53,7 @@ routerProductos.get("/:id", (req, res, next) => {
 
 routerProductos.post("/", (req, res, next) => {
     const obj = req.body
+    console.log("req.body => ", req.body)
     productos.save(obj)
     .then(id => {
         res.json({id, ...obj})

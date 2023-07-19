@@ -1,6 +1,6 @@
 class Contador {
     static cuentaGeneral = 25
-      static obtenerCuentaGlobal() { return Contador.cuentaGeneral}
+    static obtenerCuentaGlobal() { return Contador.cuentaGeneral}
     
     constructor(nombre) {
       this.cuentaPersonal = 0;

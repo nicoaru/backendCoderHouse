@@ -1,0 +1,31 @@
+.navBar {
+    background-color: rgb(24, 22, 22);
+    padding: 20px 30px 20px 20px;
+    color: whitesmoke;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+ul {
+    padding: 0px;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+li {
+    list-style: none;
+    padding: 0px 20px;
+}
+
+.link {
+    text-decoration: none;
+    color: inherit;
+}
+
+.link-active {
+    text-shadow: 0px 0px 2px whitesmoke;
+    text-decoration: 1px underline whitesmoke;
+}

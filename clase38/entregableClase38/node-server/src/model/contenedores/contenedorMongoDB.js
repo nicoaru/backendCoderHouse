@@ -1,52 +1,57 @@
-const mongoose = require("mongoose")
-const {uriStringMongo} = require('../../config/config.js')
+const {MongoDBClient} = require('./mongoDBClient.js')
 
 class ContenedorMongoDB {
     constructor(model) {
         this.model = model;
-        this.uriString = uriStringMongo
+        this.mongoClient = this.connectDB()
+        // this.uriString = uriStringMongo
     }
 
     // connect to DB
-    connect() {
-        mongoose.connect(this.uriString)
-        .then(res => console.log(`Respuesta conexión DB => conectado a ${res.connections[0]._connectionString}`))
-        .catch(error => console.log("Error de conexión a DB => ", error.message))
+    connectDB() {
+        MongoDBClient.getInstance()
     }
+
     // devuelve la lista de objetos almacenados
     getAll() {
         return this.model.find()
     }
-    //Guarda un nuevo producto en el archivo
-    save(object) {
-        const _object = new this.model(object)
-        return _object.save()  
-    }
-    //Guarda varios productos nuevos
-    saveMany(array) {
-        return this.model.insertMany(array)
-    }
-
-
     // Devuelve el objeto con el id indicado
     getById(id) {
         return this.model.findOne({_id: id})
     }
-    // Devuelve el objeto que cumple el filtro
+    // Devuelve los objetos que cumplen el filtro
     getByFilter(filterObj) {
         return this.model.find(filterObj)
     }
+    // Devuelve un solo objeto que cumple el filtro (deberia ser un filtro unique key)
     getOneByFilter(filterObj) {
         return this.model.findOne(filterObj)
+    }    
+
+    //Guarda un nuevo producto en la DB
+    save(object) {
+        const _object = new this.model(object)
+        return _object.save()  
     }
+    //Guarda varios productos nuevos en la DB
+    saveMany(array) {
+        return this.model.insertMany(array)
+    }
+
     // elimina el objeto con el id indicado
     deleteById(id) {
         return this.model.deleteOne({_id:id})
+    }
+    // Elimina los objetos que cumplen el filtro
+    deleteByFilter(filterObj) {
+        return this.model.deleteMany(filterObj)
     }
     // elimina todos los objetos
     deleteAll() {
         return this.model.deleteMany()
     }
+
     // actualiza el objeto con el id indicado
     updateById(updatedObject, id) {
         return this.model.findOneAndUpdate({_id: id}, updatedObject, {returnDocument:'after'})

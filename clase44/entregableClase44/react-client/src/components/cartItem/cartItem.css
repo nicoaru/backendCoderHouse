@@ -1,0 +1,15 @@
+.cartItemContainer {
+    /* margin: 1em 0px; */
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+    align-items: center;
+}
+.cartItemImage {
+    height: 50px;
+    width: 50px;
+    border-radius: 10px;
+}
+.cartItemContainer .itemTitle, .cartItemContainer .itemPrice {
+    font-size: 20px;
+}

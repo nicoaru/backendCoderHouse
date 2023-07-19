@@ -4,15 +4,15 @@ const { createHash, compareHash, validateEmail } = require('../utils/utils.js')
 const {UsersDAO} = require('../model/daos/daos.js')
 const {Types} = require('mongoose');
 
-// PASSPORT AUTHENTICATION CONFIGURATION
 
+// PASSPORT AUTHENTICATION CONFIGURATION
 
 passport.use('login', new LocalStrategy( async (username, password, done) => {
     console.log("Entró en passport login")
     try {
-        console.log(`line 12 . username: ${username}, password: ${password}`)
+        console.log(`line 13 . username: ${username}, password: ${password}`)
         const _user = await UsersDAO.getOneByFilter({username: username})
-        console.log("line 14 . _user => ", _user)
+        console.log("line 15 . _user => ", _user)
         if (!_user || !(compareHash(password, _user.password))){
             console.log(`line 16 . No autenticado`)
             // passport responde con status 401 (unauthorized)

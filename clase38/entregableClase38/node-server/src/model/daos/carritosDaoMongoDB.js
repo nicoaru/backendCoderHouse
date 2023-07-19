@@ -5,7 +5,6 @@ const Types = mongoose.Types
 class CarritosDaoMongoDB extends ContenedorMongoDB {
   constructor(model) {
     super(model);
-    this.connect()
   }
 
   getAllCarritos(req, res) {
